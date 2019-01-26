@@ -7,35 +7,24 @@ public class PlayerController : MonoBehaviour
     #region Fields
     public static PlayerController Instance { get; private set; }
 
-    [SerializeField]
-    private Rigidbody2D rb;
-
-    [SerializeField]
-    private float movementSpeed;
-
-    [SerializeField]
-    private float turnSpeed;
-
-    [SerializeField]
-    private Transform carryPointN;
-
-    [SerializeField]
-    private Transform carryPointS;
-
-    [SerializeField]
-    private Transform carryPointE;
-
-    [SerializeField]
-    private Transform carryPointW;
-
-    // Store the carry object that we last collided with
-    private GameObject carryObject;
-
+    [SerializeField] private BoxCollider2D box;
+    [SerializeField] private float movementSpeed;
+    [SerializeField] private float turnSpeed;
+    [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private Transform carryPointN;
+    [SerializeField] private Transform carryPointS;
+    [SerializeField] private Transform carryPointE;
+    [SerializeField] private Transform carryPointW;
+    
     private bool isCarrying;
+    private Collider2D carryObject;
+    private Transform desiredCarryPoint;
+    private Direction facing;
 
-    private enum Direction { North, South, East, West };
-
-    private Direction idleDirection;
+    private enum Direction
+    {
+        N, S, W, E
+    }
 
     #endregion
 
@@ -51,67 +40,96 @@ public class PlayerController : MonoBehaviour
         {
            Vector2 inputDirection = Vector2.zero;
 
-            if (Input.GetKey(KeyCode.Space) && gameObject.GetComponent<Collider2D>().IsTouching(carryObject.GetComponent<Collider2D>()))
+            if (Input.GetKeyDown(KeyCode.Space))
             {
-                isCarrying = !isCarrying;
-                if (!isCarrying)
+                if (isCarrying)
                 {
+                    //drop
+                    isCarrying = false;
                     carryObject.transform.parent = null;
+                }
+                else if (carryObject != null && box.IsTouching(carryObject))
+                {
+                    //pick up
+                    isCarrying = true;
                 }
             }
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                if (isCarrying)
-                {
-                    carryObject.transform.parent = carryPointN;
-                    carryObject.transform.localPosition = Vector2.zero;
-                }
-
+                desiredCarryPoint = carryPointN;
                 inputDirection += Vector2.up;
-                idleDirection = Direction.North;
-            }
-            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
-            {
-                if (isCarrying)
-                {
-                    carryObject.transform.parent = carryPointW;
-                    carryObject.transform.localPosition = Vector2.zero;
-                }
-
-                inputDirection += Vector2.left;
-                idleDirection = Direction.West;
-            }
-
-            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-            {
-                if (isCarrying)
-                {
-                    carryObject.transform.parent = carryPointE;
-                    carryObject.transform.localPosition = Vector2.zero;
-                }
-
-                inputDirection += Vector2.right;
-                idleDirection = Direction.East;
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                if (isCarrying)
-                {
-                    carryObject.transform.parent = carryPointS;
-                    carryObject.transform.localPosition = Vector2.zero;
-                }
-
+                desiredCarryPoint = carryPointS;
                 inputDirection += Vector2.down;
-                idleDirection = Direction.South;
             }
 
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                desiredCarryPoint = carryPointW;
+                inputDirection += Vector2.left;
+            }
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                desiredCarryPoint = carryPointE;
+                inputDirection += Vector2.right;
+            }
+            
             inputDirection.Normalize();
             inputDirection *= movementSpeed;
 
             rb.velocity = Vector2.Lerp(rb.velocity, inputDirection, turnSpeed);
 
+            float xvel = rb.velocity.x;
+            float yvel = rb.velocity.y;
+            float xabs = Mathf.Abs(xvel);
+            float yabs = Mathf.Abs(yvel);
+
+            if (xvel > 0 || yvel > 0)
+            {
+                if (xabs > yabs)
+                {
+                    if (xvel > 0)
+                    {
+                        //right
+                        facing = Direction.E;
+                        desiredCarryPoint = carryPointE;
+                    }
+                    else
+                    {
+                        //left
+                        facing = Direction.W;
+                        desiredCarryPoint = carryPointW;
+                    }
+                }
+                else
+                {
+                    if (yvel > 0)
+                    {
+                        //up
+                        facing = Direction.N;
+                        desiredCarryPoint = carryPointN;
+                    }
+                    else
+                    {
+                        //down
+                        facing = Direction.S;
+                        desiredCarryPoint = carryPointS;
+                    }
+                }
+            }
+            
+            //TODO: use "facing" to set animations
+
+            if (isCarrying)
+            {
+                carryObject.transform.parent = desiredCarryPoint;
+                carryObject.transform.localPosition = Vector3.zero;
+            }
 
             yield return new WaitForFixedUpdate();
         }
@@ -121,15 +139,7 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.CompareTag("Food"))
         {
-            carryObject = collision.gameObject;
-        }
-    }
-
-    private void OnTriggerExit2D(Collider2D collision)
-    {
-        if (collision.CompareTag("Food"))
-        {
-            carryObject = null;
+            carryObject = collision;
         }
     }
 }

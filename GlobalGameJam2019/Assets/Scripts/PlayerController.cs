@@ -49,10 +49,11 @@ public class PlayerController : MonoBehaviour
                     //drop
                     isCarrying = false;
                     carryObject.transform.parent = null;
-                    if (carryObject.gameObject.GetComponent<FoodController>().canStore)
+                    var food = carryObject.gameObject.GetComponent<FoodController>();
+                    if (food.canStore)
                     {
                         carryObject.gameObject.SetActive(false);
-
+                        GameController.Instance.AddScore(food.points);
                     }
                 }
                 else if (carryObject != null && box.IsTouching(carryObject))

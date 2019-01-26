@@ -7,13 +7,14 @@ public class GameController : MonoBehaviour
 {
     public Text scoreText;
 
-    public int score;
+    public int score = 0;
 
     public static GameController Instance;
 
     private void Start()
     {
         Instance = this;
+        UpdateScore();
     }
 
     public void AddScore(int pointsToAdd)

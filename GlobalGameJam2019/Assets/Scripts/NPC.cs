@@ -5,6 +5,14 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     #region Fields
+    public Transform[] patrolPoints;
+    public Rigidbody2D rb;
+
+    private int patrolIndex;
+    public float patrolStoppingDistance;
+    public float patrolStopTime;
+    private float patrolStoppedAt;
+
     public float speedCasual;
     public float speedRun;
     public float viewDistance;
@@ -58,13 +66,35 @@ public class NPC : MonoBehaviour
         }
     }
 
-    protected virtual void MoveCasual()
+    protected void MoveCasual()
     {
+        if (patrolPoints.Length == 0)
+            return;
 
+        Vector3 direction = Vector3.zero;
+
+        if (Vector3.Distance(transform.position, patrolPoints[patrolIndex].position) > patrolStoppingDistance)
+        {
+            //move toward point
+            direction = (patrolPoints[patrolIndex].position - transform.position).normalized * speedCasual;
+        }
+        else if (patrolStoppedAt == 0)
+        {
+            //start slowing to a stop
+            patrolStoppedAt = Time.time;
+        }
+        else if (Time.time > patrolStoppedAt + patrolStopTime)
+        {
+            //go to next point
+            patrolStoppedAt = 0;
+            patrolIndex = (patrolIndex + 1) % patrolPoints.Length;
+        }
+
+        rb.velocity = Vector2.Lerp(rb.velocity, direction, turnSpeed);
     }
 
     protected virtual void MoveFast()
     {
-
+        //implemented in children classes
     }
 }

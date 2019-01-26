@@ -5,13 +5,8 @@ using UnityEngine;
 public class Prey : NPC
 {
     #region Fields
-    [SerializeField] private Rigidbody2D rb;
-    #endregion
 
-    protected override void MoveCasual()
-    {
-        
-    }
+    #endregion
 
     protected override void MoveFast()
     {

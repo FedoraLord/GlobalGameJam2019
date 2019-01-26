@@ -17,11 +17,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform carryPointW;
     
     private bool isCarrying;
-    private Collider2D carryObject;
-    private Transform desiredCarryPoint;
-    private Direction facing;
-
     private bool touchingFoxHole;
+    private Collider2D carryObject;
+    private Direction facing;
+    private Transform desiredCarryPoint;
+    private Vector3 home;
 
     private enum Direction
     {
@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
     {
         Instance = this;
         StartCoroutine(Move());
+        home = transform.position;
     }
 
     private IEnumerator Move()
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
                     {
                         carryObject.gameObject.SetActive(false);
                         GameController.Instance.AddScore(food.points);
+                        FoodController.list.Remove(food);
                     }
                 }
                 else if (carryObject != null && box.IsTouching(carryObject))
@@ -177,16 +179,23 @@ public class PlayerController : MonoBehaviour
         //reset all active food and enemy locations
         for (int i = 0; i < Prey.list.Count; i++)
         {
-
+            Prey.list[i].ResetBehavior();
         }
 
         for (int i = 0; i < Enemy.list.Count; i++)
         {
-
+            Enemy.list[i].ResetBehavior();
         }
 
-
+        for (int i = 0; i < FoodController.list.Count; i++)
+        {
+            FoodController.list[i].ResetBehavior();
+        }
 
         //respawn
+        transform.position = home;
+        rb.velocity = Vector2.zero;
+        isCarrying = false;
+        carryObject = null;
     }
 }

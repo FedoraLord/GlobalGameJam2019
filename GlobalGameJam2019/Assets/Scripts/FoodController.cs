@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class FoodController : MonoBehaviour
 {
-    public bool canStore;
+    public static List<FoodController> list = new List<FoodController>();
 
+    public bool canStore;
     public int points = 1;
+
+    private Vector3 home;
+
+    private void Start()
+    {
+        list.Add(this);
+        home = transform.position;
+    }
+
+    public void ResetBehavior()
+    {
+        transform.position = home;
+        transform.parent = null;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {

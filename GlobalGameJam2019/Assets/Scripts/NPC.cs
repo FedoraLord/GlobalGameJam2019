@@ -31,6 +31,7 @@ public class NPC : MonoBehaviour
     {
         StartCoroutine(CheckLineOfSight());
         StartCoroutine(Move());
+        AddInstance();
         home = transform.position;
     }
 
@@ -43,6 +44,7 @@ public class NPC : MonoBehaviour
     {
         IsSanic = false;
         transform.position = home;
+        rb.velocity = Vector2.zero;
     }
 
     private IEnumerator CheckLineOfSight()

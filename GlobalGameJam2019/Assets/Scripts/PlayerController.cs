@@ -38,7 +38,9 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
                 inputDirection += Vector2.down;
 
+            inputDirection.Normalize();
             inputDirection *= movementSpeed;
+
             rb.velocity = Vector2.Lerp(rb.velocity, inputDirection, turnSpeed);
 
             yield return new WaitForFixedUpdate();

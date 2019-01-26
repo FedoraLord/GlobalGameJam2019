@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     #region Fields
+    public static PlayerController Instance { get; private set; }
+
     [SerializeField]
     private Rigidbody2D rb;
 
@@ -17,6 +19,7 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        Instance = this;
         StartCoroutine(Move());
     }
 

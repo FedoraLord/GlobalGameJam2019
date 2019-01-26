@@ -142,4 +142,30 @@ public class PlayerController : MonoBehaviour
             carryObject = collision;
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<Enemy>() != null)
+        {
+            Die();
+        }
+    }
+
+    public void Die()
+    {
+        //reset all active food and enemy locations
+        for (int i = 0; i < Prey.list.Count; i++)
+        {
+
+        }
+
+        for (int i = 0; i < Enemy.list.Count; i++)
+        {
+
+        }
+
+
+
+        //respawn
+    }
 }

@@ -4,15 +4,44 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region Fields
+    [SerializeField]
+    private Rigidbody2D rb;
+
+    [SerializeField]
+    private float movementSpeed;
+
+    [SerializeField]
+    private float turnSpeed;
+    #endregion
+
+    private void Start()
     {
-        
+        StartCoroutine(Move());
     }
 
-    // Update is called once per frame
-    void Update()
+    private IEnumerator Move()
     {
-        
+        while (true)
+        {
+            Vector2 inputDirection = Vector2.zero;
+
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+                inputDirection += Vector2.up;
+
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+                inputDirection += Vector2.left;
+
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+                inputDirection += Vector2.right;
+
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+                inputDirection += Vector2.down;
+
+            inputDirection *= movementSpeed;
+            rb.velocity = Vector2.Lerp(rb.velocity, inputDirection, turnSpeed);
+
+            yield return new WaitForFixedUpdate();
+        }
     }
 }

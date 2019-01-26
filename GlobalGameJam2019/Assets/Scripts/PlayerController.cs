@@ -31,7 +31,9 @@ public class PlayerController : MonoBehaviour
 
     private bool isCarrying;
 
-    private string idleDirection;
+    private enum Direction { North, South, East, West };
+
+    private Direction idleDirection;
 
     #endregion
 
@@ -46,10 +48,13 @@ public class PlayerController : MonoBehaviour
         {
            Vector2 inputDirection = Vector2.zero;
 
-            if (Input.GetKey(KeyCode.Space) && carryObject != null)
+            if (Input.GetKey(KeyCode.Space) && gameObject.GetComponent<Collider2D>().IsTouching(carryObject.GetComponent<Collider2D>()))
             {
                 isCarrying = !isCarrying;
-                carryObject.transform.localPosition = Vector2.zero;
+                if (!isCarrying)
+                {
+                    carryObject.transform.parent = null;
+                }
             }
 
             if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
@@ -61,7 +66,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 inputDirection += Vector2.up;
-                idleDirection = "up";
+                idleDirection = Direction.North;
             }
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
             {
@@ -72,7 +77,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 inputDirection += Vector2.left;
-                idleDirection = "left";
+                idleDirection = Direction.West;
             }
 
             if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
@@ -84,7 +89,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 inputDirection += Vector2.right;
-                idleDirection = "right";
+                idleDirection = Direction.East;
             }
 
             if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
@@ -96,7 +101,7 @@ public class PlayerController : MonoBehaviour
                 }
 
                 inputDirection += Vector2.down;
-                idleDirection = "down";
+                idleDirection = Direction.South;
             }
 
             inputDirection.Normalize();
@@ -111,9 +116,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Food") && !isCarrying)
+        if (collision.CompareTag("Food"))
         {
             carryObject = collision.gameObject;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Food"))
+        {
+            carryObject = null;
         }
     }
 }

@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     private Transform desiredCarryPoint;
     private Direction facing;
 
+    private bool touchingFoxHole;
+
     private enum Direction
     {
         N, S, W, E
@@ -47,6 +49,11 @@ public class PlayerController : MonoBehaviour
                     //drop
                     isCarrying = false;
                     carryObject.transform.parent = null;
+                    if (carryObject.gameObject.GetComponent<FoodController>().canStore)
+                    {
+                        carryObject.gameObject.SetActive(false);
+
+                    }
                 }
                 else if (carryObject != null && box.IsTouching(carryObject))
                 {
@@ -140,6 +147,19 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("Food"))
         {
             carryObject = collision;
+        }
+
+        if (collision.CompareTag("FoxHole"))
+        {
+            touchingFoxHole = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("FoxHole"))
+        {
+            touchingFoxHole = false;
         }
     }
 

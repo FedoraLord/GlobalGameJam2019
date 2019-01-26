@@ -147,7 +147,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Food"))
+        if (collision.gameObject.GetComponent<FoodController>())
         {
             carryObject = collision;
         }
@@ -168,10 +168,22 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.GetComponent<Enemy>() != null)
+        NPC npc = collision.gameObject.GetComponent<NPC>();
+        if (npc != null)
         {
-            Die();
+            if (npc is Enemy)
+            {
+                Die();
+            }
+            else /*if (npc is Prey)*/
+            {
+                if (!isCarrying)
+                {
+                    carryObject = collision.collider;
+                }
+            }
         }
+        
     }
 
     public void Die()

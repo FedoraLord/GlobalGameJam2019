@@ -13,8 +13,11 @@ public class FoodController : MonoBehaviour
 
     private void Start()
     {
-        list.Add(this);
-        home = transform.position;
+        if (GetComponent<Prey>() == null)
+        {
+            list.Add(this);
+            home = transform.position;
+        }
     }
 
     public void ResetBehavior()

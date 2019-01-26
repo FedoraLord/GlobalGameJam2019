@@ -62,4 +62,21 @@ public class Prey : NPC
             list.Remove(this);
         }
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<PlayerController>() != null)
+        {
+            Die();
+        }
+    }
+
+    private void Die()
+    {
+        enabled = false;
+        GetComponent<FoodController>().enabled = true;
+        GetComponent<Collider2D>().isTrigger = true;
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        StopAllCoroutines();
+    }
 }

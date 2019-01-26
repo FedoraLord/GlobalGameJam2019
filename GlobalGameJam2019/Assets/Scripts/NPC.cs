@@ -54,17 +54,19 @@ public class NPC : MonoBehaviour
 
         while (true)
         {
-            if (Vector2.Distance(player.transform.position, transform.position) < viewDistance)
+            if (!player.isSneaking)
             {
-                Vector2 playerDirection = player.transform.position - transform.position;
-                float angle = Vector2.Angle(facing, playerDirection);
-
-                if (angle <= viewAngle)
+                if (Vector2.Distance(player.transform.position, transform.position) < viewDistance)
                 {
-                    IsSanic = true;
+                    Vector2 playerDirection = player.transform.position - transform.position;
+                    float angle = Vector2.Angle(facing, playerDirection);
+                    
+                    if (angle <= viewAngle)
+                    {
+                        IsSanic = true;
+                    }
                 }
             }
-
             yield return null;
         }
     }

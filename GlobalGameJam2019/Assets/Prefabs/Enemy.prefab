@@ -102,7 +102,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &2966485329192436644
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -141,11 +141,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 734b18f594376214192c6d29de78a9d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 2059624353}
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  rb: {fileID: 2059624353}
   patrolStoppingDistance: 1
   patrolStopTime: 2
   speedCasual: 1
@@ -154,4 +154,3 @@ MonoBehaviour:
   viewAngle: 60
   turnSpeed: 0.1
   IsSanic: 0
-  facing: {x: 0, y: 0}

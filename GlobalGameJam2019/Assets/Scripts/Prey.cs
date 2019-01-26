@@ -59,6 +59,7 @@ public class Prey : NPC
         if (collision.GetComponent<HidingSpot>() != null)
         {
             gameObject.SetActive(false);
+            list.Remove(this);
         }
     }
 }

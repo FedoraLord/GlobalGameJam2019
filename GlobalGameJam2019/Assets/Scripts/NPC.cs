@@ -31,7 +31,11 @@ public class NPC : MonoBehaviour
         {
             if (Vector2.Distance(player.transform.position, transform.position) < viewDistance)
             {
-                //&& if angle < viewAngle
+                Vector2 playerDirection = player.transform.position - transform.position;
+                Vector2 viewDirection = this.moveDirection;
+
+                float angle = Vector2.Angle(viewDirection, playerDirection);
+                if (angle <= viewAngle)
                 {
                     IsSanic = true;
                 }

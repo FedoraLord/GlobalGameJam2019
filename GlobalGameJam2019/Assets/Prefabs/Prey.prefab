@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7761005570233051449}
   - component: {fileID: 5395061274964050119}
   - component: {fileID: 3481774163399480211}
+  - component: {fileID: 1942963601}
   m_Layer: 0
   m_Name: Prey
   m_TagString: Untagged
@@ -151,3 +152,17 @@ MonoBehaviour:
   viewAngle: 45
   turnSpeed: 0.1
   IsSanic: 0
+--- !u!114 &1942963601
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2553763073234315759}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b7188f0b471b4f62be6e3f97f71073f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  canStore: 0
+  points: 5

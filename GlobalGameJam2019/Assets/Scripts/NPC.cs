@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,8 +12,6 @@ public class NPC : MonoBehaviour
     public Transform[] patrolPoints;
     public float patrolStoppingDistance;
     public float patrolStopTime;
-    private int patrolIndex;
-    private float patrolStoppedAt;
 
     [Header("Movement")]
     public float speedCasual;
@@ -21,8 +20,9 @@ public class NPC : MonoBehaviour
     public float viewAngle;
     public float turnSpeed;
 
-    public bool IsSanic = false;
-
+    private bool IsSanic = false;
+    private float patrolStoppedAt;
+    private int patrolIndex;
     private Vector2 facing = Vector2.up;
     private Vector2 home;
     #endregion

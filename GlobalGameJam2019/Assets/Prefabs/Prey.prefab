@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1295809693906348875}
   - component: {fileID: 8909067568267899196}
   - component: {fileID: 7761005570233051449}
+  - component: {fileID: 5395061274964050119}
   - component: {fileID: 3481774163399480211}
   m_Layer: 0
   m_Name: Prey
@@ -102,6 +103,32 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!61 &5395061274964050119
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2553763073234315759}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 0.46, y: 0.3}
+    newSize: {x: 0.46, y: 0.3}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 0.46, y: 0.3}
+  m_EdgeRadius: 0
 --- !u!114 &3481774163399480211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,11 +141,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b36f1e73d0e1404a8402b0cfe8ef001, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  patrolPoints: []
+  rb: {fileID: 7761005570233051449}
+  patrolStoppingDistance: 0
+  patrolStopTime: 0
   speedCasual: 1
   speedRun: 3
   viewDistance: 1
   viewAngle: 45
   turnSpeed: 0.1
   IsSanic: 0
-  moveDirection: {x: 0, y: 0}
-  rb: {fileID: 7761005570233051449}
+  facing: {x: 0, y: 0}

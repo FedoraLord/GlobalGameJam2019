@@ -5,14 +5,16 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     #region Fields
-    public Transform[] patrolPoints;
     public Rigidbody2D rb;
 
-    private int patrolIndex;
+    [Header("Patrolling")]
+    public Transform[] patrolPoints;
     public float patrolStoppingDistance;
     public float patrolStopTime;
+    private int patrolIndex;
     private float patrolStoppedAt;
 
+    [Header("Movement")]
     public float speedCasual;
     public float speedRun;
     public float viewDistance;
@@ -21,13 +23,26 @@ public class NPC : MonoBehaviour
 
     public bool IsSanic = false;
 
-    public Vector2 moveDirection;
+    private Vector2 facing = Vector2.up;
+    private Vector2 home;
     #endregion
 
     private void Start()
     {
         StartCoroutine(CheckLineOfSight());
         StartCoroutine(Move());
+        home = transform.position;
+    }
+
+    protected virtual void AddInstance()
+    {
+
+    }
+
+    public virtual void ResetBehavior()
+    {
+        IsSanic = false;
+        transform.position = home;
     }
 
     private IEnumerator CheckLineOfSight()
@@ -40,9 +55,8 @@ public class NPC : MonoBehaviour
             if (Vector2.Distance(player.transform.position, transform.position) < viewDistance)
             {
                 Vector2 playerDirection = player.transform.position - transform.position;
-                Vector2 viewDirection = this.moveDirection;
+                float angle = Vector2.Angle(facing, playerDirection);
 
-                float angle = Vector2.Angle(viewDirection, playerDirection);
                 if (angle <= viewAngle)
                 {
                     IsSanic = true;
@@ -81,6 +95,7 @@ public class NPC : MonoBehaviour
         {
             //move toward point
             direction = (patrolPoints[patrolIndex].position - transform.position).normalized * speedCasual;
+            facing = direction;
         }
         else if (patrolStoppedAt == 0)
         {
@@ -96,9 +111,17 @@ public class NPC : MonoBehaviour
 
         rb.velocity = Vector2.Lerp(rb.velocity, direction, turnSpeed);
     }
-
-    protected virtual void MoveFast()
+    
+    private void MoveFast()
     {
-        //implemented in children classes
+        Vector3 direction = GetFastDirection();
+        direction.Normalize();
+        direction *= speedRun;
+        rb.velocity = Vector2.Lerp(rb.velocity, direction, turnSpeed);
+    }
+
+    protected virtual Vector3 GetFastDirection()
+    {
+        return Vector3.zero;
     }
 }

@@ -28,6 +28,8 @@ public class PlayerController : MonoBehaviour
         N, S, W, E
     }
 
+    public bool isSneaking = false;
+
     #endregion
 
     private void Start()
@@ -156,6 +158,11 @@ public class PlayerController : MonoBehaviour
         {
             touchingFoxHole = true;
         }
+
+        if (collision.CompareTag("Sneak"))
+        {
+            isSneaking = true;
+        }
     }
 
     private void OnTriggerExit2D(Collider2D collision)
@@ -163,6 +170,11 @@ public class PlayerController : MonoBehaviour
         if (collision.CompareTag("FoxHole"))
         {
             touchingFoxHole = false;
+        }
+
+        if (collision.CompareTag("Sneak"))
+        {
+            isSneaking = false;
         }
     }
 

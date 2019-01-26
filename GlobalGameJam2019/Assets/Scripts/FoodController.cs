@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class FoodController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public bool canStore;
+
+    public int points = 1;
+
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.tag == "FoxHole")
+        {
+            canStore = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        
+        if (collision.gameObject.tag == "FoxHole")
+        {
+            canStore = false;
+        }
     }
 }

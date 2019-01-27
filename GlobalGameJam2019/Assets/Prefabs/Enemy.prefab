@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6165211106086419488}
   - component: {fileID: 2059624353}
   - component: {fileID: 2966485329192436644}
+  - component: {fileID: 9106869698138677348}
   - component: {fileID: 6546701647495666315}
   m_Layer: 0
   m_Name: Enemy
@@ -71,7 +72,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300012, guid: 50b5d7ca96738497c89862eb0e1552d2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 32eafc73f3ba58c4488cee1b20c2e8ee, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -120,15 +121,34 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.25, y: 0.47}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 0.25, y: 0.47}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.25, y: 0.47}
+  m_Size: {x: 0.5, y: 0.5}
   m_EdgeRadius: 0
+--- !u!95 &9106869698138677348
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2925375394029052740}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 22100000, guid: a9ebf107a08195f4a94601341a428896, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6546701647495666315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -142,15 +162,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 2059624353}
+  anim: {fileID: 9106869698138677348}
+  sr: {fileID: 6165211106086419488}
   patrolPoints:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  patrolStoppingDistance: 1
-  patrolStopTime: 2
+  patrolStoppingDistance: 0.2
+  patrolStopTime: 0
   speedCasual: 1
   speedRun: 5
   viewDistance: 1
   viewAngle: 60
   turnSpeed: 0.1
-  IsSanic: 0

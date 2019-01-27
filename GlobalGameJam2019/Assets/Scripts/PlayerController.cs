@@ -57,6 +57,12 @@ public class PlayerController : MonoBehaviour
         isInputAllowed = true;
     }
 
+    private void LateUpdate()
+    {
+        if (isInputAllowed)
+            sr.flipX = facing == Direction.E;
+    }
+
     private IEnumerator Move()
     {
         while (true)
@@ -189,7 +195,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
-            sr.flipX = facing == Direction.E;
+            //sr.flipX = facing == Direction.E;
 
             if (isCarrying)
             {

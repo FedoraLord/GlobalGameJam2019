@@ -7,6 +7,8 @@ public class NPC : MonoBehaviour
 {
     #region Fields
     public Rigidbody2D rb;
+    public Animator anim;
+    public SpriteRenderer sr;
 
     [Header("Patrolling")]
     public Transform[] patrolPoints;
@@ -20,7 +22,11 @@ public class NPC : MonoBehaviour
     public float viewAngle;
     public float turnSpeed;
 
+    private enum Direction { N, S, W, E };
+
+    private bool isMoving;
     private bool IsSanic = false;
+    private Direction facingDir;
     private float patrolStoppedAt;
     private int patrolIndex;
     private Vector2 facing = Vector2.up;
@@ -75,23 +81,73 @@ public class NPC : MonoBehaviour
     {
         while (true)
         {
-            if (IsSanic)
+            Vector3 inputDirection = (IsSanic ? MoveFast() : MoveCasual());
+
+            float xvel = rb.velocity.x;
+            float yvel = rb.velocity.y;
+            float xabs = Mathf.Abs(xvel);
+            float yabs = Mathf.Abs(yvel);
+            Direction wasFacing = facingDir;
+
+            if (xabs > 0.1f || yabs > 0.1f)
             {
-                MoveFast();
+                if (xabs > yabs)
+                {
+                    if (xvel > 0.1f)
+                    {
+                        //right
+                        facingDir = Direction.E;
+                    }
+                    else
+                    {
+                        //left
+                        facingDir = Direction.W;
+                    }
+                }
+                else
+                {
+                    if (yvel > 0.1f)
+                    {
+                        //up
+                        facingDir = Direction.N;
+                    }
+                    else
+                    {
+                        //down
+                        facingDir = Direction.S;
+                    }
+                }
             }
-            else
+
+            if (wasFacing != facingDir)
             {
-                MoveCasual();
+                anim.SetTrigger("DirectionChanged");
+
+                switch (facingDir)
+                {
+                    case Direction.N:
+                        anim.SetInteger("Direction", 0);
+                        break;
+                    case Direction.S:
+                        anim.SetInteger("Direction", 1);
+                        break;
+                    case Direction.W:
+                    case Direction.E:
+                        anim.SetInteger("Direction", 2);
+                        break;
+                }
             }
+
+            sr.flipX = facingDir == Direction.E;
 
             yield return null;
         }
     }
 
-    protected void MoveCasual()
+    protected Vector3 MoveCasual()
     {
         if (patrolPoints.Length == 0)
-            return;
+            return Vector3.zero;
 
         Vector3 direction = Vector3.zero;
 
@@ -114,14 +170,16 @@ public class NPC : MonoBehaviour
         }
 
         rb.velocity = Vector2.Lerp(rb.velocity, direction, turnSpeed);
+        return direction;
     }
     
-    private void MoveFast()
+    private Vector3 MoveFast()
     {
         Vector3 direction = GetFastDirection();
         direction.Normalize();
         direction *= speedRun;
         rb.velocity = Vector2.Lerp(rb.velocity, direction, turnSpeed);
+        return direction;
     }
 
     protected virtual Vector3 GetFastDirection()

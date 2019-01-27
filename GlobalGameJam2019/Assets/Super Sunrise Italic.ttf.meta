@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: efe071a8d76594548ba805940c949dda
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Super Sunrise
+  fontNames:
+  - Super Sunrise
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 7cf3c4a59af2e97418c37a2cec7c77f9, type: 3}
+  - {fileID: 12800000, guid: 21f73e072cfbbe144bc3547aeb954a40, type: 3}
+  - {fileID: 12800000, guid: 4f18478cfcf70ed40b12903edbf0ca8e, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

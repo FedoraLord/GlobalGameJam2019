@@ -1,11 +1,7 @@
 fileFormatVersion: 2
-guid: 66e11a23cdb22344383af1debcbd5044
+guid: 23d6756666438dc40b28daa02d44ba70
 TextureImporter:
-  fileIDToRecycleName:
-    21300000: Thought Bubbles_0
-    21300002: Thought Bubbles_1
-    21300004: Thought Bubbles_2
-    21300006: Thought Bubbles_3
+  fileIDToRecycleName: {}
   externalObjects: {}
   serializedVersion: 7
   mipmaps:
@@ -44,7 +40,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -97,91 +93,11 @@ TextureImporter:
     androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: Thought Bubbles_0
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 28
-        width: 19
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a7ddc1e6b7bc8c44bbc1380232138487
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Thought Bubbles_1
-      rect:
-        serializedVersion: 2
-        x: 29
-        y: 28
-        width: 19
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d2a54d6edc2b5244f9f0e2726a67c368
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Thought Bubbles_2
-      rect:
-        serializedVersion: 2
-        x: 3
-        y: 3
-        width: 19
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3ccd80ec41fb9ce438f150c7d3947ddf
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Thought Bubbles_3
-      rect:
-        serializedVersion: 2
-        x: 28
-        y: 2
-        width: 19
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 47ba448cde621244f9db1fb3aca33bd3
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 1e52c20cd2fa0c345a9b69bf7de87e39
+    spriteID: 1bd0e764c06d01b48a3f143fd5a569da
     vertices: []
     indices: 
     edges: []

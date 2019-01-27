@@ -273,3 +273,4 @@ MonoBehaviour:
   carryPointS: {fileID: 501004825}
   carryPointE: {fileID: 1499393606}
   carryPointW: {fileID: 635202820}
+  isSneaking: 0

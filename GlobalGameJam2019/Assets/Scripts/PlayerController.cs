@@ -7,16 +7,19 @@ public class PlayerController : MonoBehaviour
     #region Fields
     public static PlayerController Instance { get; private set; }
 
-    [SerializeField] private BoxCollider2D box;
+    [SerializeField] private Animator anim;
+    [SerializeField] private Collider2D box;
     [SerializeField] private float movementSpeed;
     [SerializeField] private float turnSpeed;
     [SerializeField] private Rigidbody2D rb;
+    [SerializeField] private SpriteRenderer sr;
     [SerializeField] private Transform carryPointN;
     [SerializeField] private Transform carryPointS;
     [SerializeField] private Transform carryPointE;
     [SerializeField] private Transform carryPointW;
     
     private bool isCarrying;
+    private bool isMoving;
     private bool touchingFoxHole;
     private Collider2D carryObject;
     private Direction facing;
@@ -101,11 +104,13 @@ public class PlayerController : MonoBehaviour
             float xabs = Mathf.Abs(xvel);
             float yabs = Mathf.Abs(yvel);
 
-            if (xvel > 0 || yvel > 0)
+            Direction wasFacing = facing;
+
+            if (xabs > 0.1f || yabs > 0.1f)
             {
                 if (xabs > yabs)
                 {
-                    if (xvel > 0)
+                    if (xvel > 0.1f)
                     {
                         //right
                         facing = Direction.E;
@@ -120,7 +125,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
-                    if (yvel > 0)
+                    if (yvel > 0.1f)
                     {
                         //up
                         facing = Direction.N;
@@ -134,8 +139,37 @@ public class PlayerController : MonoBehaviour
                     }
                 }
             }
-            
+
             //TODO: use "facing" to set animations
+            bool wasMoving = isMoving;
+            isMoving = rb.velocity.magnitude > 0.1f || inputDirection.magnitude > 0;
+
+            if (isMoving != wasMoving)
+            {
+                anim.SetTrigger("DirectionChanged");
+                anim.SetBool("IsMoving", isMoving);
+            }
+            
+            if (wasFacing != facing)
+            {
+                anim.SetTrigger("DirectionChanged");
+
+                switch (facing)
+                {
+                    case Direction.N:
+                        anim.SetInteger("Direction", 0);
+                        break;
+                    case Direction.S:
+                        anim.SetInteger("Direction", 1);
+                        break;
+                    case Direction.W:
+                    case Direction.E:
+                        anim.SetInteger("Direction", 2);
+                        break;
+                }
+            }
+
+            sr.flipX = facing == Direction.E;
 
             if (isCarrying)
             {

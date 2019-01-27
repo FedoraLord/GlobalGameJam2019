@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using Cinemachine;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 public class PlayerController : MonoBehaviour
 {
@@ -17,16 +19,21 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Transform carryPointS;
     [SerializeField] private Transform carryPointE;
     [SerializeField] private Transform carryPointW;
-    
+
+    public PlayableDirector cutsceneDirector1;
+    public CinemachineVirtualCamera cutsceneVCam1;
+    public CinemachineVirtualCamera mainVCam;
+    public bool isInputAllowed = false; //starting in cutscene
+
     private bool isCarrying;
     private bool isMoving;
     private bool touchingFoxHole;
     private Collider2D carryObject;
-    private Direction facing;
+    public Direction facing;
     private Transform desiredCarryPoint;
     private Vector3 home;
 
-    private enum Direction
+    public enum Direction
     {
         N, S, W, E
     }
@@ -40,13 +47,26 @@ public class PlayerController : MonoBehaviour
         Instance = this;
         StartCoroutine(Move());
         home = transform.position;
+        cutsceneDirector1.stopped += OnDirectorStopped;
+    }
+
+    private void OnDirectorStopped(PlayableDirector obj)
+    {
+        cutsceneVCam1.enabled = false;
+        mainVCam.enabled = true;
+        isInputAllowed = true;
     }
 
     private IEnumerator Move()
     {
         while (true)
         {
-           Vector2 inputDirection = Vector2.zero;
+            if (!isInputAllowed)
+            {
+                yield return new WaitUntil(() => { return isInputAllowed; });
+            }
+
+            Vector2 inputDirection = Vector2.zero;
 
             if (Input.GetKeyDown(KeyCode.Space))
             {

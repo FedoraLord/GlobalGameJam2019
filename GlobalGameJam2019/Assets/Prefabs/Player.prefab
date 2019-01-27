@@ -284,7 +284,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.25, y: 0.47}
+  m_Size: {x: 1, y: 1}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -368,4 +368,9 @@ MonoBehaviour:
   carryPointS: {fileID: 501004825}
   carryPointE: {fileID: 1499393606}
   carryPointW: {fileID: 635202820}
+  cutsceneDirector1: {fileID: 0}
+  cutsceneVCam1: {fileID: 0}
+  mainVCam: {fileID: 0}
+  isInputAllowed: 0
+  facing: 0
   isSneaking: 0
